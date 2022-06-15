@@ -314,3 +314,6 @@ y al darle en Sumbit nos regresara a la primera pagina y en la terminal nos most
 
 
 https://youtu.be/8_F3S3uquj0?t=1664
+
+
+hola shako

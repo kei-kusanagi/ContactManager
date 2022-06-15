@@ -1,2 +1,9 @@
 {% extends 'core/base.html' %}
 
+{% block content %}
+    {% for contact in contacts %}
+        <div class="px-4 py-6 text-center">
+            <h2 class="text-xl">{{ contact.first_name }} {{ contact.last_name }}</h2>
+        </div>
+    {% endfor %}
+{% endblock %}

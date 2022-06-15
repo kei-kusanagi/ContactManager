@@ -1,4 +1,10 @@
 from django.shortcuts import render
 
+from contact.models import Contact
+
 def frontpage(request):
-    return render(request, 'core/frontpage.html')
+    contacts = Contact.objects.all()
+
+    return render(request, 'core/frontpage.html', {
+        'contacts': contacts
+    })

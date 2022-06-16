@@ -8,5 +8,6 @@ urlpatterns = [
     path('', frontpage, name='frontpage'),
     path('add/', contact_views.add, name='add'),
     path('contacts/<int:pk>/', contact_views.edit, name='edit'),
+    path('contacts/<int:pk>/delete', contact_views.delete, name='delete'),
     path('admin/', admin.site.urls),
 ]

@@ -53,3 +53,8 @@ def edit(request, pk):
         'contact': contact,
         'categories': categories
     })
+
+def delete(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    contact.delete()
+    return redirect('frontpage')

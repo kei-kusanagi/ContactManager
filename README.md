@@ -550,5 +550,25 @@ ahora agregaremos el entrar a este modo de editar al darle click a la tarjeta de
 y ya al darle click nos llevara a la pagina edit del contacto (por eso le pusimos el ``{% url 'edit' contact.id %}`` )
 
 
+ahora podemos ponerle la funcion de borrar contacctos, asiq ue vamos a /contact/views.py y agregamos la siguiente funcion
 
-https://youtu.be/8_F3S3uquj0?t=2360
+```
+def delete(request, pk):
+
+    contact = get_object_or_404(Contact, pk=pk)
+
+    contact.delete()
+
+    return redirect('frontpage')
+```
+
+ahora vamos a /contactmanager/urls.py y agregamos el siguiente path
+
+```
+path('contacts/<int:pk>/delete', contact_views.delete, name='delete'),
+```
+
+ahora vamos a nuestro frontpage.html y copiamos y pegamos el mismo boton de edit pero lo cambiamos para que al presionarlo llame la funcion "delete"
+
+![[Pasted image 20220616162830.png]]
+

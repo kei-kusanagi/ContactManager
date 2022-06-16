@@ -8,7 +8,7 @@ vamos a www.gotignore.io y creamos creamos uno añadiendo django y lo pegamos en
 
 creamos nuestro archivo re requerimientos en la terminal atravez del comando
 ```pip freeze > requirements.txt```
-![[Pasted image 20220614145530.png]]
+![[img/Pasted image 20220614145530.png]]
 
 iniciamos nuestro archivo git con el comando ```git init```  y ahora si a empezar
 

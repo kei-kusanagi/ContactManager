@@ -1,9 +1,20 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    {% for contact in contacts %}
-        <div class="px-4 py-6 text-center">
-            <h2 class="text-xl">{{ contact.first_name }} {{ contact.last_name }}</h2>
-        </div>
-    {% endfor %}
+    <div class="space-y-5">
+        {% for contact in contacts %}
+            <div class="px-4 py-6 text-center bg-gray-500 rounded-xl">
+                <h2 class="mb-2 text-xl">{{ contact.first_name }} {{ contact.last_name }}</h2>
+                <h3 class="text-5m text-gray-900">{{ contact.category.title }}</h3>
+
+                <p><strong>E-mail:</strong>{{ contact.email }}</p>
+                <p><strong>Phone:</strong>{{ contact.phone }}</p>
+
+                <p class="mt-6">
+                    {{ contact.adress }}<br>
+                    {{ contact.zipcode }} {{contact.city }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

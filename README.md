@@ -572,3 +572,83 @@ ahora vamos a nuestro frontpage.html y copiamos y pegamos el mismo boton de edit
 
 ![[Pasted image 20220616162830.png]]
 
+Ya casi acavamos, agregaremos una barra de busqueda, asi que vamos a frontpage.html y agregemos el siguiente div
+```
+{% block content %}
+	<div class="mb-4">
+		<form method="get" action=".">
+            <input type="text" name="query" placeholder="Search..." class="w-full py-4 px-6 rounded-xl bg-gray-700 text-white">
+        </form>
+    </div>
+```
+![[Pasted image 20220616164620.png]]
+
+ahora le pondremos su funcion para buscar, vamos a /core/views.py y agregamos lo siguiente en la funcion de frontpage(request)
+
+```
+query = request.GET.get('query', '')
+
+    if query:
+        contacts = contacts.filter(first_name__icontains=query)
+```
+
+ahora al buscar algo que contenfa first name dentro de los contactos nos arrojara solo ese contacto
+
+![[Pasted image 20220616171708.png]]
+
+si queremos hacer lo mismo ya sea con el email, direccion ocualquier otro dato necesitamos un modelo de django llamado Q y lo importamos alli mismo en /core/views.py
+``from django.db.models import Q`` 
+
+y modificamos el "if" para que quede de la siguiente manera
+
+```
+    if query:
+
+        contacts = contacts.filter(
+
+            Q(first_name__icontains=query)
+
+            |
+
+            Q(last_name__icontains=query)
+
+            |
+
+            Q(email__icontains=query)
+
+            |
+
+            Q(phone__icontains=query)
+
+            |
+
+            Q(address__icontains=query)
+
+            |
+
+            Q(zipcode__icontains=query)
+
+            |
+
+            Q(city__icontains=query)
+
+        )
+```
+ y listo, cada que escribamos algo que este contenido en el nombre o apellidos o email, telefono o cualquier dato aparecera en nuestra busqueda
+
+![[Pasted image 20220616173016.png]]
+
+ahora podemos agregar lo siguiente justo antes de terminar el bucle for en frontpage.html para que si al buscar no nos arroja ningun resultado salga un mensaje de "No results..."
+
+```
+        {% empty %}
+
+            <div class="px-4 py-6 text-center bg-gray-500 rounded-xl">
+
+                <p>No results...</p>
+
+            </div>
+
+        {% endfor %}
+```
+![[Pasted image 20220616173400.png]]

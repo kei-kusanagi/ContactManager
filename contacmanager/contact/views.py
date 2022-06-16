@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 from .models import Category, Contact
 
@@ -31,3 +31,25 @@ def add(request):
     return render(request, 'contact/add.html', {
         'categories': categories
         })
+
+def edit(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    categories = Category.objects.all()
+
+    if request.method == 'POST':
+        contact.category_id = request.POST.get('category')
+        contact.first_name = request.POST.get('first_name')
+        contact.last_name = request.POST.get('last_name')
+        contact.email = request.POST.get('email')
+        contact.phone = request.POST.get('phone')
+        contact.address = request.POST.get('address')
+        contact.zipcode = request.POST.get('zipcode')
+        contact.city = request.POST.get('city')
+
+        contact.save()
+        return redirect('frontpage')
+
+    return render(request, 'contact/edit.html', {
+        'contact': contact,
+        'categories': categories
+    })

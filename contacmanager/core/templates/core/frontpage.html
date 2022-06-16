@@ -11,9 +11,13 @@
                 <p><strong>Phone:</strong>{{ contact.phone }}</p>
 
                 <p class="mt-6">
-                    {{ contact.adress }}<br>
+                    {{ contact.address }}<br>
                     {{ contact.zipcode }} {{contact.city }}
                 </p>
+
+                <div class="mt-6 items-end text-left">
+                    <a href="{% url 'edit' contact.id %}" class="px-4 py-2 bg-green-800 text_white rounded-xl">Edit</a>
+                </div>
             </div>
         {% endfor %}
     </div>

@@ -9,7 +9,7 @@
     <nav class="py-6 px-4 bg-gray-900 flex justify-between items-center">
         <a href="{% url 'frontpage' %}" class="text-white text-2xl">Contact Manager</a>
 
-        <a href="{% url 'add' %}" class="p-3 bg-green-400 text-white text-xl rounded-xl">+</a>
+        <a href="{% url 'contact:add' %}" class="p-3 bg-green-400 text-white text-xl rounded-xl">+</a>
     </nav>
     <div class="px-6 py-4">
         {% block content %}

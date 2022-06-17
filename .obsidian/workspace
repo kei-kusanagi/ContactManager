@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "20311efb904e4aa4",
+        "id": "4e775173a0565650",
         "type": "leaf",
         "state": {
           "type": "markdown",
@@ -88,8 +88,9 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "20311efb904e4aa4",
+  "active": "4e775173a0565650",
   "lastOpenFiles": [
-    "README.md"
+    "README.md",
+    "img/Pasted image 20220616162830.png"
   ]
 }

@@ -21,8 +21,8 @@
                 </p>
 
                 <div class="mt-6 items-end text-right">
-                    <a href="{% url 'edit' contact.id %}" class="px-4 py-2 bg-green-800 text_white rounded-xl">Edit</a>
-                    <a href="{% url 'delete' contact.id %}" class="px-4 py-2 bg-red-800 text_white rounded-xl">Delete</a>
+                    <a href="{% url 'contact:edit' contact.id %}" class="px-4 py-2 bg-green-800 text_white rounded-xl">Edit</a>
+                    <a href="{% url 'contact:delete' contact.id %}" class="px-4 py-2 bg-red-800 text_white rounded-xl">Delete</a>
                 </div>
             </div>
         {% empty %}

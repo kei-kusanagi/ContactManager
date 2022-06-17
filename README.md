@@ -652,3 +652,41 @@ ahora podemos agregar lo siguiente justo antes de terminar el bucle for en front
         {% endfor %}
 ```
 ![[Pasted image 20220616173400.png]]
+
+para terminar necesitamos que al momento de ver un contacto nos aparesca su nombr ecomo nombre de la app, asi que agregamos el siguiente archivo a /contact/urls.py 
+
+```
+from django.urls import path
+
+from . import views
+
+  
+
+app_name='contact'
+
+urlpatterns = [
+
+    path('add/', views.add, name='add'),
+
+    path('contacts/<int:pk>/', views.edit, name='edit'),
+
+    path('contacts/<int:pk>/delete', views.delete, name='delete'),
+
+]
+```
+
+y vamos a nuestro archivo /contactmanager/urlp.py y borramos los paths de arriba ya que los utilizaremos aqui y añadiremos el siguiente path y el 'include'
+``path('', include('contact.urls')),``  
+para que valla y tome esto de nuestra app de contactos, quedando asi:
+
+![[Pasted image 20220616205103.png]]
+
+para que funciuone solo tenemos que ir a nuestro archivo base.html y modicar donde mandamos a llamar las funciones de add
+
+![[Pasted image 20220616205502.png]]
+
+y luego a frontpage, donde tambien llamamos el edit y delete
+
+![[Pasted image 20220616205607.png]]
+
+Y listoooooo!!!! con esto hemos terminado, proximamente tratare de agregar la funcion de agregar una foto y que la convierta en un thumbnail para que aparesca una miniatura :)

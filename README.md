@@ -886,3 +886,5 @@ urlpatterns = [
 ahora al darle el "Log out" nos llevara a "Log in"
 
 ![[Pasted image 20220627172921.png]]
+
+bien, ahora implementaremos una nueva función para solo poder ver los contactos que nosotros hemos agregado, para esto nos vamos a /contact/models.py

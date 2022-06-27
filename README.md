@@ -8,7 +8,7 @@ vamos a www.gotignore.io y creamos creamos uno añadiendo django y lo pegamos en
 
 creamos nuestro archivo re requerimientos en la terminal atravez del comando
 ```pip freeze > requirements.txt```
-![[Pasted image 20220614145530.png]]
+![image](img/Pasted%20image%2020220614145530.png)
 
 iniciamos nuestro archivo git con el comando ```git init```  y ahora si a empezar
 
@@ -23,13 +23,13 @@ y dos app's adicionales, core y contact
 ``` django-admin startapp contact```
 
 Importante ir inmediatamente a contactmanager/settings.py y declaramos las apps en INSTALED_APS
-![[Pasted image 20220613220621.png]]
+![image](img/Pasted%20image%2020220613220621.png)
 
 Ahora crearemos nuestros templates para la pagina, vamos a /core y creamos una carpeta llamada /templates y luego otra llamada /core
 ```core/templates/core```
 y dentro creamos 2 archivos, base.html y frontpage.html y dentro de base copiamos el archivo inicial en https://tailwindcss.com/docs/installation/play-cdn
 
-![[Pasted image 20220613220949.png]]
+![image](img/Pasted%20image%2020220613220949.png)
 
 eso lo copiamos y pegamos en base.html y en frontpage.html solo ponemos
 ```{% extends 'core/base.html' %}```
@@ -68,7 +68,7 @@ urlpatterns = [
 ```
 
 ahora corremos el servidor desde la terminal con ```python manage.py runserver``` y vemos la magia
-![[Pasted image 20220613222336.png]]
+![image](img/Pasted%20image%2020220613222336.png)
 
 Ahora procederemos a darle algo de estilo para que se paresca mas a la tabla que queremos al final
 
@@ -83,7 +83,7 @@ Agregamos lo siguiente a base.html
         
 </nav>
 ```
-![[Pasted image 20220614154918.png]]
+![image](img/Pasted%20image%2020220614154918.png)
 
 ahora crearemos las tablas que usaremos en la base de datos, vamos a contact/models.py y agregamos lo siguiente
 
@@ -118,7 +118,7 @@ class Contact(models.Model):
 ```
 
 (quitamos ese molesto texto rojo haciendo el ```python manage.py makemigrations``` y el ```python manage.py migrate``` )
-![[Pasted image 20220614160439.png]]
+![image](img/Pasted%20image%2020220614160439.png)
 
 como siguiente paso activaremos el boton de add asi que vamos a la pagina base.html y le añadimos esto al body solo para diferenciarlo del fondo de la pagina
 
@@ -167,7 +167,7 @@ y luego vamos a nuestro base.html y activamos el boton
 ```<a href="{% url 'add' %}" class="p-3 bg-green-400 text-white```
 luego añadimos el archivo y carpetas teplates y add.html contact/templates/contact/add.html y dentro extendemos la base
 
-![[Pasted image 20220614203415.png]]
+![image](img/Pasted%20image%2020220614203415.png)
 
 y en base.html quitamos el hello world y ponemos (el div es para darle pading a todo lo que este dentro del block content)
 ```
@@ -180,7 +180,7 @@ y en base.html quitamos el hello world y ponemos (el div es para darle pading a 
     </div>
 ```
 de esta forma para extender todo esto a las demas plantillas
-![[Pasted image 20220614205314.png]]
+![image](img/Pasted%20image%2020220614205314.png)
 
 y luego en add.html ponemos 
 ```
@@ -197,7 +197,7 @@ y luego en add.html ponemos
 {% endblock %}
 
 ```
-![[Pasted image 20220614205331.png]]
+![image](img/Pasted%20image%2020220614205331.png)
 
 
 ya con el estilo correcto, regresamos a add.html y agregamos lo siguiente para pdoer escribir en la base de datos el dato correspondiente y agregamos ```name=first_name```
@@ -224,7 +224,7 @@ ya con el estilo correcto, regresamos a add.html y agregamos lo siguiente para p
 {% endblock %}
 ```
 
-![[Pasted image 20220614211659.png]]
+![image](img/Pasted%20image%2020220614211659.png)
 
 ahora copiamos y pegamos el div para Last name, Email, Phone, Zipcode y City
 
@@ -236,7 +236,7 @@ y agregamos un boton de Sumbit al final para que quede asi
 
 </div>
 ```
-![[Pasted image 20220614212446.png]]
+![image](img/Pasted%20image%2020220614212446.png)
 
 podemos agregar un enlase para que cada que demos click en el titulo nos regrese a la pantalla principal
 ```
@@ -256,13 +256,13 @@ admin.site.register(Category
 ahora creamos un super usuario, regresamos a la terminal y ponemos el siguiente comando
 ```python manage.py creatseuperuser```
 y llenamos los datos
-![[Pasted image 20220614212926.png]]
+![image](img/Pasted%20image%2020220614212926.png)
 
 nos vamos a nuestro servidor al area de administracion http://127.0.0.1:8000/admin/ y nos logeamos
-![[Pasted image 20220614213039.png]]
+![image](img/Pasted%20image%2020220614213039.png)
 
 cramos una nueva categoria y le ponemos "Private" y otra para "Work"
-![[Pasted image 20220614213202.png]]
+![image](img/Pasted%20image%2020220614213202.png)
 
 creadas nuestras categorias, ahora vamos a dar la opcion de seleccionarlo dentro de nuestra pagina para añadir
 
@@ -303,19 +303,19 @@ def add(request):
 ```
 
 
-![[Pasted image 20220614214640.png]]
-![[Pasted image 20220614214656.png]]
+![image](img/Pasted%20image%2020220614214640.png)
+![image](img/Pasted%20image%2020220614214656.png)
 
 Ahora solo necesitamos manejar el envio de la forma en las vistas, asi que regresamos a /contact/views.py y agregamos cada campo dentro de un if y luego con ``Contact.objects.create`` los asignamos a un nuebo objeto y añadimos al final ``return redirect('frontpage')`` para que nos regrese a la pagina principal
 
-![[Pasted image 20220614220127.png]]
+![image](img/Pasted%20image%2020220614220127.png)
 
 checamos que el servidor no arroje ningun error y procedemos a llenar datos de prueba y darle el boton Submit para checar que lo guarde en la base de datos
-![[Pasted image 20220614221250.png]]
+![image](img/Pasted%20image%2020220614221250.png)
 
 y al darle en Sumbit nos regresara a la primera pagina y en la terminal nos mostrara lo siguiente
 
-![[Pasted image 20220614221457.png]]
+![image](img/Pasted%20image%2020220614221457.png)
 
 
 a continuacion mostraremos la lista de contactos en nuestra frontpage, para esto necesitamos ir a /core/views.py y creamos la bariable contacts asignandole los objetos, de la sigueinte manera
@@ -357,7 +357,7 @@ y ahora en nuestra frontpage.html agregamos el sigueinte codigo que nos permitir
 
 Y ahora al recargar la pagina principal nos mostrara los contactos ya agregados
 
-![[Pasted image 20220615171822.png]]
+![image](img/Pasted%20image%2020220615171822.png)
 
 Le agregaremos algo de estilo para que nos aparesca mas informacion sobre los contactos, quedando asi
 
@@ -401,7 +401,7 @@ Le agregaremos algo de estilo para que nos aparesca mas informacion sobre los co
 
 {% endblock %}
 ```
-![[Pasted image 20220615193017.png]]
+![image](img/Pasted%20image%2020220615193017.png)
 
 ahora pondremos la funcionalidad de poder editar los contactos añadidos, nos vamos a /contact/views.py  y añadimos la siguiente funcion
 
@@ -436,7 +436,7 @@ path('contacts/<int:pk>/', contact_views.edit, name='edit'),
 y copiamos practicamente todo el archivo de add.html en la misma carpeta de /contact/templates/contact y le ponemos edit.html, ahora si vamos a la direccion
 http://127.0.0.1:8000/contacts/1/ nos mostrara la misma plantilla de añadir, bien ahora solo tendremos que editarla
 
-![[Pasted image 20220615195325.png]]
+![image](img/Pasted%20image%2020220615195325.png)
 
 ahora a cada ``<div>``  le agregamos un ``value="{{ contact.control }}"`` y quedaria asi
 
@@ -449,7 +449,7 @@ ahora a cada ``<div>``  le agregamos un ``value="{{ contact.control }}"`` y qued
 ```
 
 ahora copiamos y pegamos esto en todos los demas ``<div>`` 's
-![[Pasted image 20220615195914.png]]
+![image](img/Pasted%20image%2020220615195914.png)
 
 para la categoria agregamos un {% if %} quedando asi
 
@@ -490,7 +490,7 @@ def edit(request, pk):
     })
 ```
 
-![[Pasted image 20220615200856.png]]
+![image](img/Pasted%20image%2020220615200856.png)
 
 ahora agregamos todos los objetos a la funcion para que al momento de salvar mande los nuevos datos a la categorya, nombre yo dato correspondiente
 
@@ -545,7 +545,7 @@ ahora agregaremos el entrar a este modo de editar al darle click a la tarjeta de
 	<a href="{% url 'edit' contact.id %}" class="px-4 py-2 bg-green-800 text_white rounded-xl">Edit</a>
 </div>
 ```
-![[Pasted image 20220615203302.png]]
+![image](img/Pasted%20image%2020220615203302.png)
 
 y ya al darle click nos llevara a la pagina edit del contacto (por eso le pusimos el ``{% url 'edit' contact.id %}`` )
 
@@ -570,7 +570,7 @@ path('contacts/<int:pk>/delete', contact_views.delete, name='delete'),
 
 ahora vamos a nuestro frontpage.html y copiamos y pegamos el mismo boton de edit pero lo cambiamos para que al presionarlo llame la funcion "delete"
 
-![[Pasted image 20220616162830.png]]
+![image](img/Pasted%20image%2020220616162830.png)
 
 Ya casi acavamos, agregaremos una barra de busqueda, asi que vamos a frontpage.html y agregemos el siguiente div
 ```
@@ -581,7 +581,7 @@ Ya casi acavamos, agregaremos una barra de busqueda, asi que vamos a frontpage.h
         </form>
     </div>
 ```
-![[Pasted image 20220616164620.png]]
+![image](img/Pasted%20image%2020220616164620.png)
 
 ahora le pondremos su funcion para buscar, vamos a /core/views.py y agregamos lo siguiente en la funcion de frontpage(request)
 
@@ -594,7 +594,7 @@ query = request.GET.get('query', '')
 
 ahora al buscar algo que contenfa first name dentro de los contactos nos arrojara solo ese contacto
 
-![[Pasted image 20220616171708.png]]
+![image](img/Pasted%20image%2020220616171708.png)
 
 si queremos hacer lo mismo ya sea con el email, direccion ocualquier otro dato necesitamos un modelo de django llamado Q y lo importamos alli mismo en /core/views.py
 ``from django.db.models import Q`` 
@@ -636,7 +636,7 @@ y modificamos el "if" para que quede de la siguiente manera
 ```
  y listo, cada que escribamos algo que este contenido en el nombre o apellidos o email, telefono o cualquier dato aparecera en nuestra busqueda
 
-![[Pasted image 20220616173016.png]]
+![image](img/Pasted%20image%2020220616173016.png)
 
 ahora podemos agregar lo siguiente justo antes de terminar el bucle for en frontpage.html para que si al buscar no nos arroja ningun resultado salga un mensaje de "No results..."
 
@@ -651,7 +651,7 @@ ahora podemos agregar lo siguiente justo antes de terminar el bucle for en front
 
         {% endfor %}
 ```
-![[Pasted image 20220616173400.png]]
+![image](img/Pasted%20image%2020220616173400.png)
 
 para terminar necesitamos que al momento de ver un contacto nos aparesca su nombr ecomo nombre de la app, asi que agregamos el siguiente archivo a /contact/urls.py 
 
@@ -679,14 +679,14 @@ y vamos a nuestro archivo /contactmanager/urlp.py y borramos los paths de arriba
 ``path('', include('contact.urls')),``  
 para que valla y tome esto de nuestra app de contactos, quedando asi:
 
-![[Pasted image 20220616205103.png]]
+![image](img/Pasted%20image%2020220616205103.png)
 
 para que funciuone solo tenemos que ir a nuestro archivo base.html y modicar donde mandamos a llamar las funciones de add
 
-![[Pasted image 20220616205502.png]]
+![image](img/Pasted%20image%2020220616205502.png)
 
 y luego a frontpage, donde tambien llamamos el edit y delete
 
-![[Pasted image 20220616205607.png]]
+![image](img/Pasted%20image%2020220616205607.png)
 
 Y listoooooo!!!! con esto hemos terminado, proximamente tratare de agregar la funcion de agregar una foto y que la convierta en un thumbnail para que aparesca una miniatura :)

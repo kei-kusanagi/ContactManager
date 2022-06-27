@@ -6,7 +6,7 @@ y lo activamos
 
 vamos a www.gotignore.io y creamos creamos uno añadiendo django y lo pegamos en nuestro .gitignore dentro de la carpeta /env/.gitignore
 
-creamos nuestro archivo re requerimientos en la terminal atravez del comando
+creamos nuestro archivo re requerimientos en la terminal a través del comando
 ```pip freeze > requirements.txt```
 ![image](img/Pasted%20image%2020220614145530.png)
 
@@ -70,7 +70,7 @@ urlpatterns = [
 ahora corremos el servidor desde la terminal con ```python manage.py runserver``` y vemos la magia
 ![image](img/Pasted%20image%2020220613222336.png)
 
-Ahora procederemos a darle algo de estilo para que se paresca mas a la tabla que queremos al final
+Ahora procederemos a darle algo de estilo para que se parezca mas a la tabla que queremos al final
 
 Agregamos lo siguiente a base.html
 
@@ -93,7 +93,7 @@ class Category(models.Model):
     title = models.Charfield(max_length=255)
 ```
 
-para agregar una tabla de tipo caracter con capasidad maxima de 255 caracteres
+para agregar una tabla de tipo carácter con capacidad máxima de 255 caracteres
 
 Y ahora una tabla FOREIGNKEY que es una columna que sirve para señalar cual es la llave primaria de otra tabl
 
@@ -120,11 +120,11 @@ class Contact(models.Model):
 (quitamos ese molesto texto rojo haciendo el ```python manage.py makemigrations``` y el ```python manage.py migrate``` )
 ![image](img/Pasted%20image%2020220614160439.png)
 
-como siguiente paso activaremos el boton de add asi que vamos a la pagina base.html y le añadimos esto al body solo para diferenciarlo del fondo de la pagina
+como siguiente paso activaremos el botón de add asi que vamos a la pagina base.html y le añadimos esto al body solo para diferenciarlo del fondo de la pagina
 
 ```<body class="bg-gray-300">```
 
-ahora vamos a la app de contact y modificaremos el archivo views.py (para añadir lo que hara el boton) mediante la siguiente funcion
+ahora vamos a la app de contact y modificaremos el archivo views.py (para añadir lo que hará el boton) mediante la siguiente función
 
 ```
 from django.shortcuts import render
@@ -137,7 +137,7 @@ def add(request):
     
 ```
 
-y luego importamos esto a contactmanager/urls.py, mandando a llamar primero la vista de contact atraves de la linea ```from contact import views as contact_views```
+y luego importamos esto a contactmanager/urls.py, mandando a llamar primero la vista de contact a traves de la linea ```from contact import views as contact_views```
 
 y luego agragammos la linia del path para que quede asi todo ```path('add/', contact_views.add, name='add'),```
 
@@ -165,7 +165,7 @@ urlpatterns = [
 
 y luego vamos a nuestro base.html y activamos el boton
 ```<a href="{% url 'add' %}" class="p-3 bg-green-400 text-white```
-luego añadimos el archivo y carpetas teplates y add.html contact/templates/contact/add.html y dentro extendemos la base
+luego añadimos el archivo y carpetas templates y add.html contact/templates/contact/add.html y dentro extendemos la base
 
 ![image](img/Pasted%20image%2020220614203415.png)
 
@@ -179,7 +179,7 @@ y en base.html quitamos el hello world y ponemos (el div es para darle pading a 
 
     </div>
 ```
-de esta forma para extender todo esto a las demas plantillas
+de esta forma para extender todo esto a las demás plantillas
 ![image](img/Pasted%20image%2020220614205314.png)
 
 y luego en add.html ponemos 
@@ -200,7 +200,7 @@ y luego en add.html ponemos
 ![image](img/Pasted%20image%2020220614205331.png)
 
 
-ya con el estilo correcto, regresamos a add.html y agregamos lo siguiente para pdoer escribir en la base de datos el dato correspondiente y agregamos ```name=first_name```
+ya con el estilo correcto, regresamos a add.html y agregamos lo siguiente para poder escribir en la base de datos el dato correspondiente y agregamos ```name=first_name```
 
 ```
 {% extends 'core/base.html' %}
@@ -228,7 +228,7 @@ ya con el estilo correcto, regresamos a add.html y agregamos lo siguiente para p
 
 ahora copiamos y pegamos el div para Last name, Email, Phone, Zipcode y City
 
-y agregamos un boton de Sumbit al final para que quede asi
+y agregamos un botón de Sumbit al final para que quede asi
 ```
 <div>
 
@@ -238,12 +238,12 @@ y agregamos un boton de Sumbit al final para que quede asi
 ```
 ![image](img/Pasted%20image%2020220614212446.png)
 
-podemos agregar un enlase para que cada que demos click en el titulo nos regrese a la pantalla principal
+podemos agregar un enlace para que cada que demos clic en el titulo nos regrese a la pantalla principal
 ```
 <a href="{% url 'frontpage' %}" class="text-white text-2xl">Contact Manager</a>
 ```
 
-Hermoso, ahora tenemos que agregar las categorias en el sitio de administracion, ais que nos vamos a /contact/admin.py
+Hermoso, ahora tenemos que agregar las categorías en el sitio de administración, así que nos vamos a /contact/admin.py
 
 ```
 from django.contrib import admin
@@ -258,13 +258,13 @@ ahora creamos un super usuario, regresamos a la terminal y ponemos el siguiente 
 y llenamos los datos
 ![image](img/Pasted%20image%2020220614212926.png)
 
-nos vamos a nuestro servidor al area de administracion http://127.0.0.1:8000/admin/ y nos logeamos
+nos vamos a nuestro servidor al área de administración http://127.0.0.1:8000/admin/ y nos logamos
 ![image](img/Pasted%20image%2020220614213039.png)
 
-cramos una nueva categoria y le ponemos "Private" y otra para "Work"
+creamos una nueva categoría y le ponemos "Private" y otra para "Work"
 ![image](img/Pasted%20image%2020220614213202.png)
 
-creadas nuestras categorias, ahora vamos a dar la opcion de seleccionarlo dentro de nuestra pagina para añadir
+creadas nuestras categorías, ahora vamos a dar la opción de seleccionarlo dentro de nuestra pagina para añadir
 
 ```
 <div>
@@ -278,7 +278,7 @@ creadas nuestras categorias, ahora vamos a dar la opcion de seleccionarlo dentro
 </div>
 ```
 
-y en nuestro archivo de /contact/views.py tenemos que agregar lo siguiente para que funcione el loop de las categorias a seleccionar
+y en nuestro archivo de /contact/views.py tenemos que agregar lo siguiente para que funcione el loop de las categorías a seleccionar
 
 ```
 from django.shortcuts import render
@@ -306,11 +306,11 @@ def add(request):
 ![image](img/Pasted%20image%2020220614214640.png)
 ![image](img/Pasted%20image%2020220614214656.png)
 
-Ahora solo necesitamos manejar el envio de la forma en las vistas, asi que regresamos a /contact/views.py y agregamos cada campo dentro de un if y luego con ``Contact.objects.create`` los asignamos a un nuebo objeto y añadimos al final ``return redirect('frontpage')`` para que nos regrese a la pagina principal
+Ahora solo necesitamos manejar el envió de la forma en las vistas, así que regresamos a /contact/views.py y agregamos cada campo dentro de un if y luego con ``Contact.objects.create`` los asignamos a un nuevo objeto y añadimos al final ``return redirect('frontpage')`` para que nos regrese a la pagina principal
 
 ![image](img/Pasted%20image%2020220614220127.png)
 
-checamos que el servidor no arroje ningun error y procedemos a llenar datos de prueba y darle el boton Submit para checar que lo guarde en la base de datos
+checamos que el servidor no arroje ningún error y procedemos a llenar datos de prueba y darle el botón Sumbit para checar que lo guarde en la base de datos
 ![image](img/Pasted%20image%2020220614221250.png)
 
 y al darle en Sumbit nos regresara a la primera pagina y en la terminal nos mostrara lo siguiente
@@ -318,7 +318,7 @@ y al darle en Sumbit nos regresara a la primera pagina y en la terminal nos most
 ![image](img/Pasted%20image%2020220614221457.png)
 
 
-a continuacion mostraremos la lista de contactos en nuestra frontpage, para esto necesitamos ir a /core/views.py y creamos la bariable contacts asignandole los objetos, de la sigueinte manera
+a continuación mostraremos la lista de contactos en nuestra frontpage, para esto necesitamos ir a /core/views.py y creamos la variable contacts asignándole los objetos, de la siguiente manera
 
 ```
 from django.shortcuts import render
@@ -337,7 +337,7 @@ def frontpage(request):
     })
 ```
 
-y ahora en nuestra frontpage.html agregamos el sigueinte codigo que nos permitira hacer un bucle for por cada contacto en nuestra lista de contactos
+y ahora en nuestra frontpage.html agregamos el siguiente código que nos permitirá hacer un bucle for por cada contacto en nuestra lista de contactos
 
 ```
 {% extends 'core/base.html' %}
@@ -359,7 +359,7 @@ Y ahora al recargar la pagina principal nos mostrara los contactos ya agregados
 
 ![image](img/Pasted%20image%2020220615171822.png)
 
-Le agregaremos algo de estilo para que nos aparesca mas informacion sobre los contactos, quedando asi
+Le agregaremos algo de estilo para que nos aparezca mas información sobre los contactos, quedando asi
 
 ```
 {% extends 'core/base.html' %}
@@ -403,7 +403,7 @@ Le agregaremos algo de estilo para que nos aparesca mas informacion sobre los co
 ```
 ![image](img/Pasted%20image%2020220615193017.png)
 
-ahora pondremos la funcionalidad de poder editar los contactos añadidos, nos vamos a /contact/views.py  y añadimos la siguiente funcion
+ahora pondremos la funcionalidad de poder editar los contactos añadidos, nos vamos a /contact/views.py  y añadimos la siguiente función
 
 ```
 ...
@@ -424,7 +424,7 @@ def edit(request, pk):
 
 ```
 
-ahora en /contactmanager/urls.py devemos agregar ese path
+ahora en /contactmanager/urls.py debemos agregar ese path
 
 ``` 
 ...
@@ -433,7 +433,7 @@ path('contacts/<int:pk>/', contact_views.edit, name='edit'),
 
 ```
 
-y copiamos practicamente todo el archivo de add.html en la misma carpeta de /contact/templates/contact y le ponemos edit.html, ahora si vamos a la direccion
+y copiamos prácticamente todo el archivo de add.html en la misma carpeta de /contact/templates/contact y le ponemos edit.html, ahora si vamos a la dirección
 http://127.0.0.1:8000/contacts/1/ nos mostrara la misma plantilla de añadir, bien ahora solo tendremos que editarla
 
 ![image](img/Pasted%20image%2020220615195325.png)
@@ -451,7 +451,7 @@ ahora a cada ``<div>``  le agregamos un ``value="{{ contact.control }}"`` y qued
 ahora copiamos y pegamos esto en todos los demas ``<div>`` 's
 ![image](img/Pasted%20image%2020220615195914.png)
 
-para la categoria agregamos un {% if %} quedando asi
+para la categoría agregamos un {% if %} quedando asi
 
 ```
 <div>
@@ -470,7 +470,7 @@ para la categoria agregamos un {% if %} quedando asi
 </div>
 ```
 
-y en /contacts/views.py agregamos a la funcion el objecto categories
+y en /contacts/views.py agregamos a la función el objeto categories
 
 ```
 def edit(request, pk):
@@ -538,7 +538,7 @@ def edit(request, pk):
     })
 ```
 
-ahora agregaremos el entrar a este modo de editar al darle click a la tarjeta de contacto, para esto vamos a frontpage.html
+ahora agregaremos el entrar a este modo de editar al darle clic a la tarjeta de contacto, para esto vamos a frontpage.html
 
 ```
 <div class="mt-6 items-end text-left">
@@ -547,10 +547,10 @@ ahora agregaremos el entrar a este modo de editar al darle click a la tarjeta de
 ```
 ![image](img/Pasted%20image%2020220615203302.png)
 
-y ya al darle click nos llevara a la pagina edit del contacto (por eso le pusimos el ``{% url 'edit' contact.id %}`` )
+y ya al darle clic nos llevara a la pagina edit del contacto (por eso le pusimos el ``{% url 'edit' contact.id %}`` )
 
 
-ahora podemos ponerle la funcion de borrar contacctos, asiq ue vamos a /contact/views.py y agregamos la siguiente funcion
+ahora podemos ponerle la función de borrar contactos, así que vamos a /contact/views.py y agregamos la siguiente función
 
 ```
 def delete(request, pk):
@@ -568,11 +568,11 @@ ahora vamos a /contactmanager/urls.py y agregamos el siguiente path
 path('contacts/<int:pk>/delete', contact_views.delete, name='delete'),
 ```
 
-ahora vamos a nuestro frontpage.html y copiamos y pegamos el mismo boton de edit pero lo cambiamos para que al presionarlo llame la funcion "delete"
+ahora vamos a nuestro frontpage.html y copiamos y pegamos el mismo botón de edit pero lo cambiamos para que al presionarlo llame la función "delete"
 
 ![image](img/Pasted%20image%2020220616162830.png)
 
-Ya casi acavamos, agregaremos una barra de busqueda, asi que vamos a frontpage.html y agregemos el siguiente div
+Ya casi acabamos, agregaremos una barra de búsqueda, así que vamos a frontpage.html y agreguemos el siguiente div
 ```
 {% block content %}
 	<div class="mb-4">
@@ -583,7 +583,7 @@ Ya casi acavamos, agregaremos una barra de busqueda, asi que vamos a frontpage.h
 ```
 ![image](img/Pasted%20image%2020220616164620.png)
 
-ahora le pondremos su funcion para buscar, vamos a /core/views.py y agregamos lo siguiente en la funcion de frontpage(request)
+ahora le pondremos su función para buscar, vamos a /core/views.py y agregamos lo siguiente en la función de frontpage(request)
 
 ```
 query = request.GET.get('query', '')
@@ -592,11 +592,11 @@ query = request.GET.get('query', '')
         contacts = contacts.filter(first_name__icontains=query)
 ```
 
-ahora al buscar algo que contenfa first name dentro de los contactos nos arrojara solo ese contacto
+ahora al buscar algo que contenga first name dentro de los contactos nos arrojara solo ese contacto
 
 ![image](img/Pasted%20image%2020220616171708.png)
 
-si queremos hacer lo mismo ya sea con el email, direccion ocualquier otro dato necesitamos un modelo de django llamado Q y lo importamos alli mismo en /core/views.py
+si queremos hacer lo mismo ya sea con el email, dirección o cualquier otro dato necesitamos un modelo de django llamado Q y lo importamos allí mismo en /core/views.py
 ``from django.db.models import Q`` 
 
 y modificamos el "if" para que quede de la siguiente manera
@@ -634,11 +634,11 @@ y modificamos el "if" para que quede de la siguiente manera
 
         )
 ```
- y listo, cada que escribamos algo que este contenido en el nombre o apellidos o email, telefono o cualquier dato aparecera en nuestra busqueda
+ y listo, cada que escribamos algo que este contenido en el nombre o apellidos o email, teléfono o cualquier dato aparecerá en nuestra búsqueda
 
 ![image](img/Pasted%20image%2020220616173016.png)
 
-ahora podemos agregar lo siguiente justo antes de terminar el bucle for en frontpage.html para que si al buscar no nos arroja ningun resultado salga un mensaje de "No results..."
+ahora podemos agregar lo siguiente justo antes de terminar el bucle for en frontpage.html para que si al buscar no nos arroja ningún resultado salga un mensaje de "No results..."
 
 ```
         {% empty %}
@@ -653,7 +653,7 @@ ahora podemos agregar lo siguiente justo antes de terminar el bucle for en front
 ```
 ![image](img/Pasted%20image%2020220616173400.png)
 
-para terminar necesitamos que al momento de ver un contacto nos aparesca su nombr ecomo nombre de la app, asi que agregamos el siguiente archivo a /contact/urls.py 
+para terminar necesitamos que al momento de ver un contacto nos aparezca su nombre como nombre de la app, así que agregamos el siguiente archivo a /contact/urls.py 
 
 ```
 from django.urls import path
@@ -681,23 +681,23 @@ para que valla y tome esto de nuestra app de contactos, quedando asi:
 
 ![image](img/Pasted%20image%2020220616205103.png)
 
-para que funciuone solo tenemos que ir a nuestro archivo base.html y modicar donde mandamos a llamar las funciones de add
+para que funcione solo tenemos que ir a nuestro archivo base.html y modificar donde mandamos a llamar las funciones de add
 
 ![image](img/Pasted%20image%2020220616205502.png)
 
-y luego a frontpage, donde tambien llamamos el edit y delete
+y luego a frontpage, donde también llamamos el edit y delete
 
 ![image](img/Pasted%20image%2020220616205607.png)
 
 
-esto aun no acaba, unas semana despues el buen Stain subio una actualizacion donde añadiremos una seccion de log in para pdoer agregar contactos e implementar o añadir forms de django
+esto aun no acaba, unas semana después el buen Stain subió una actualización donde añadiremos una sección de log in para poder agregar contactos e implementar o añadir forms de django
 
-Asiq ue para empezar nos dirigiremos a /core/views y definiremos una nueva funcion:
+Así que para empezar nos dirigiremos a /core/views y definiremos una nueva funcion:
 
 primero empezamos importando la siguiente libreria
 ``from django.contrib.auth.forms import UserCreationForm``
 
-y luego declaramos neustra funcion que servira para crear ingresar y por el momento le daremos  ``"pass"`` 
+y luego declaramos nuestra función que servirá para crear ingresar y por el momento le daremos  ``"pass"`` 
 ```
 def signup(request):
 
@@ -717,7 +717,7 @@ def signup(request):
     })
 ```
 
-ahora vamos a /core/templates/core para agregar la plantilla que acavamos de declarar en la funcion signup.html
+ahora vamos a /core/templates/core para agregar la plantilla que acabamos de declarar en la función signup.html
 
 ```
 {% extends 'core/base.html' %}
@@ -740,7 +740,7 @@ ahora vamos a /core/templates/core para agregar la plantilla que acavamos de dec
 {% endblock %}
 ```
 
-ahora para que esta template funcione devemos declararla en nuestro archivo /contactmanager/urls.py (el princpial), primero lo llamamos en el from core.views y luego añadimos su path
+ahora para que esta témplate funcione debemos declararla en nuestro archivo /contactmanager/urls.py (el princpial), primero lo llamamos en el from core.views y luego añadimos su path
 
 ```
 from django.contrib import admin
@@ -762,6 +762,6 @@ urlpatterns = [
 ]
 ```
 
-ahora vamos a nuestro buscador y ponemos http://127.0.0.1:8000/signup/ y nos devera salir algo asi
+ahora vamos a nuestro buscador y ponemos http://127.0.0.1:8000/signup/ y nos deberá salir algo así
 
-![[Pasted image 20220627161247.png]]
+![image](img/Pasted%20image%2020220627161247.png)

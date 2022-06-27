@@ -717,14 +717,14 @@ def signup(request):
     })
 ```
 
-ahora vamos a /core/templates/core para agregar la plantilla que acabamos de declarar en la función signup.html
+ahora vamos a /core/templates/core para agregar la plantilla que acabamos de declarar en la función signup.html (le agregamos la misma clase al botón de add + para que se vea mejor)
 
 ```
 {% extends 'core/base.html' %}
   
 
 {% block content %}
-
+	<h1 class="mb-3 text-2xl">Sign up</h1>
     <form method="post" action=".">
 
         {% csrf_token %}
@@ -733,14 +733,14 @@ ahora vamos a /core/templates/core para agregar la plantilla que acabamos de dec
         {{ form.as_p }}
   
 
-        <button>Submit</button>
+        <button class="mt-2 p-3 bg-green-400 text-white text-xl rounded-xl">Submit</button>
 
     </form>
 
 {% endblock %}
 ```
 
-ahora para que esta témplate funcione debemos declararla en nuestro archivo /contactmanager/urls.py (el princpial), primero lo llamamos en el from core.views y luego añadimos su path
+ahora para que esta témplate funcione debemos declararla en nuestro archivo /contactmanager/urls.py (el principal), primero lo llamamos en el from core.views y luego añadimos su path
 
 ```
 from django.contrib import admin
@@ -764,4 +764,71 @@ urlpatterns = [
 
 ahora vamos a nuestro buscador y ponemos http://127.0.0.1:8000/signup/ y nos deberá salir algo así
 
-![image](img/Pasted%20image%2020220627161247.png)
+[[Pasted image 20220627163826.png]]
+![[Pasted image 20220627164014.png]]
+
+ahora si lo llenamos y le damos mandar nos saldrá obviamente un error ya que no hemos creado nuestra form para captar esos datos
+
+![[Pasted image 20220627164129.png]]
+
+así que regresamos a nuestro archivo /contact/views.py y dentro de nuestra función signup agregamos lo siguiente en donde estaba el ``"pass"``  
+
+primero añadimos esta librería 
+``from django.contrib.auth import login``
+
+luego añadimos esto
+```
+def signup(request):
+
+    if request.method == 'POST':
+
+        form = UserCreationForm(request.POST)
+
+
+        if form.is_valid():
+
+            user = form.save()
+  
+
+            login(request, user)
+  
+
+            return redirect('frontpage')
+
+    else:
+
+        form = UserCreationForm
+
+  
+
+    return render(request, 'core/signup.html',{
+
+        'form': form
+
+    })
+```
+
+si recargamos y le volvemos a dar los datos nos llevara a la pagina de inicio, ahora pongamos un botón de logout en base.html y modificamos nuestro nav
+
+```
+    <nav class="py-6 px-4 bg-gray-900 flex justify-between items-center">
+
+        <a href="{% url 'frontpage' %}" class="text-white text-2xl">Contact Manager</a>
+
+        {% if request.user.is_authenticated %}
+
+            <a href="{% url 'contact:add' %}" class="p-3 bg-green-400 text-white text-xl rounded-xl">+</a>
+
+            <a href="/logout/" class="p-3 bg-green-400 text-white text-xl rounded-xl">Log out</a>
+
+        {% else %}
+
+            <a href="/login/" class="p-3 bg-green-400 text-white text-xl rounded-xl">Log in</a>
+
+            <a href="/signup/" class="p-3 bg-green-400 text-white text-xl rounded-xl">Sign up</a>
+
+        {% endif %}
+
+    </nav>
+```
+

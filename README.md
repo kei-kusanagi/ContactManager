@@ -832,3 +832,57 @@ si recargamos y le volvemos a dar los datos nos llevara a la pagina de inicio, a
     </nav>
 ```
 
+para que funcione, tenemos que ir a settings.py y agregamos esto abajo de ``ALLOWED_HOST``, esto solo le dirá a nuestra app donde redirigirse después de hacer cada acción
+
+```
+ALLOWED_HOSTS = []
+
+
+LOGOUT_REDIRECT_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'frontpage'
+
+LOGIN_URL = 'login'
+```
+
+ahora nos vamos a nuestro urls.py y agregamos el siguiente from
+``from django.contrib.auth import views as auth_views`` 
+y luego los siguientes path's, ojo en el de login agregamos lo de ``template_name='core/login.html'`` porque de default nos manda a otra ruta (registration/login)
+
+```
+from django.contrib import admin
+
+from django.contrib.auth import views as auth_views
+
+from django.urls import path, include
+
+  
+
+from core.views import frontpage, signup
+
+  
+
+urlpatterns = [
+
+    path('', frontpage, name='frontpage'),
+
+    path('signup/', signup, name='signup'),
+
+  
+
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+
+  
+
+    path('', include('contact.urls')),    
+
+    path('admin/', admin.site.urls),
+
+]
+```
+
+ahora al darle el "Log out" nos llevara a "Log in"
+
+![[Pasted image 20220627172921.png]]

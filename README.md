@@ -689,4 +689,79 @@ y luego a frontpage, donde tambien llamamos el edit y delete
 
 ![image](img/Pasted%20image%2020220616205607.png)
 
-Y listoooooo!!!! con esto hemos terminado, proximamente tratare de agregar la funcion de agregar una foto y que la convierta en un thumbnail para que aparesca una miniatura :)
+
+esto aun no acaba, unas semana despues el buen Stain subio una actualizacion donde añadiremos una seccion de log in para pdoer agregar contactos e implementar o añadir forms de django
+
+Asiq ue para empezar nos dirigiremos a /core/views y definiremos una nueva funcion:
+
+primero empezamos importando la siguiente libreria
+``from django.contrib.auth.forms import UserCreationForm``
+
+y luego declaramos neustra funcion que servira para crear ingresar y por el momento le daremos  ``"pass"`` 
+```
+def signup(request):
+
+    if request.method == 'POST':
+
+        pass
+
+    else:
+
+        form = UserCreationForm
+
+  
+    return render(request, 'core/signup.html',{
+
+        'form': form
+
+    })
+```
+
+ahora vamos a /core/templates/core para agregar la plantilla que acavamos de declarar en la funcion signup.html
+
+```
+{% extends 'core/base.html' %}
+  
+
+{% block content %}
+
+    <form method="post" action=".">
+
+        {% csrf_token %}
+
+  
+        {{ form.as_p }}
+  
+
+        <button>Submit</button>
+
+    </form>
+
+{% endblock %}
+```
+
+ahora para que esta template funcione devemos declararla en nuestro archivo /contactmanager/urls.py (el princpial), primero lo llamamos en el from core.views y luego añadimos su path
+
+```
+from django.contrib import admin
+
+from django.urls import path, include
+
+
+from core.views import frontpage, signup
+  
+
+urlpatterns = [
+    path('', frontpage, name='frontpage'),
+
+    path('signup/', signup, name='signup'),
+
+	path('', include('contact.urls')),    
+    path('admin/', admin.site.urls),
+
+]
+```
+
+ahora vamos a nuestro buscador y ponemos http://127.0.0.1:8000/signup/ y nos devera salir algo asi
+
+![[Pasted image 20220627161247.png]]

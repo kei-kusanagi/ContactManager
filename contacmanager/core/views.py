@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -27,4 +28,14 @@ def frontpage(request):
 
     return render(request, 'core/frontpage.html', {
         'contacts': contacts
+    })
+
+def signup(request):
+    if request.method == 'POST':
+        pass
+    else:
+        form = UserCreationForm
+
+    return render(request, 'core/signup.html',{
+        'form': form
     })

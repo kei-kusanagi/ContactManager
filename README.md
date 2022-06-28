@@ -765,11 +765,11 @@ urlpatterns = [
 ahora vamos a nuestro buscador y ponemos http://127.0.0.1:8000/signup/ y nos deberá salir algo así
 
 [[Pasted image 20220627163826.png]]
-![[Pasted image 20220627164014.png]]
+![image](img/Pasted%20image%2020220627164014.png)
 
 ahora si lo llenamos y le damos mandar nos saldrá obviamente un error ya que no hemos creado nuestra form para captar esos datos
 
-![[Pasted image 20220627164129.png]]
+![image](img/Pasted%20image%2020220627164129.png)
 
 así que regresamos a nuestro archivo /contact/views.py y dentro de nuestra función signup agregamos lo siguiente en donde estaba el ``"pass"``  
 
@@ -885,7 +885,7 @@ urlpatterns = [
 
 ahora al darle el "Log out" nos llevara a "Log in"
 
-![[Pasted image 20220627172921.png]]
+![image](img/Pasted%20image%2020220627172921.png)
 
 bien, ahora implementaremos una nueva función para solo poder ver los contactos que nosotros hemos agregado, para esto nos vamos a /contact/models.py y agregamos primero esto
 ```from django.contrib.auth.models import User```
@@ -897,19 +897,19 @@ Porcierto esto lo que hace es que cuando se elimina el objeto al que se hace ref
 ya para terminar como pusimos un nuevo modelo pues tenemos que ir a hacer la migración, asi que vamos a la terminal y escribimos ``python manage.py makemigrations``
 y luego ``python manage.py migrate``, en el inter nos dira que ya tenemos registrado algo, solo le damos la opcion 1 y listo
 
-![[Pasted image 20220628131759.png]]
+![image](img/Pasted%20image%2020220628131759.png)
 
 si volvemos a correr el servidor nada cambiara ya que en nuestro views.py aun sigue mostrandonos todos los contactos, asi que vamos a /contactmanager/views.py y cambiemos eso poniendo lo siguiente:
 
-![[Pasted image 20220628132059.png]]
+![image](img/Pasted%20image%2020220628132059.png)
 
 Y al recargar la pagina si seguimos logueados con el usuario que creamos nos deberá salir que no hay resultados
 
-![[Pasted image 20220628132234.png]]
+![image](img/Pasted%20image%2020220628132234.png)
 
 OJO, si no estas logeado te saldrá un error
 
-![[Pasted image 20220628132303.png]]
+![image](img/Pasted%20image%2020220628132303.png)
 
 solo ve a http://127.0.0.1:8000/login/ y logeate con el usuario que creamos 😉
 
@@ -933,14 +933,99 @@ def frontpage(request):
 ```
 
 para terminar vamos a /contact/views.py y tenemos que conectar la forma que acabamos de hacer con el usuario como tal, asi que ponemos primero nuestro ``from django.contrib.auth.decorators import login_required``  y luego antes de cada función ponemos ``@login_required``  para que no deje hacer nada si no iniciamos sesión y luego en los objetos creados por el usuario ponemos ``created_by=request.user `` quedando mas o menos asi
-![[Pasted image 20220628134038.png]]
+![image](img/Pasted%20image%2020220628134038.png)
 
 y terminamos con ponerle esto a la función  de crear y borrar para que solo nos deje crear y borrar nuestros propios contactos
 ``contact = get_object_or_404(Contact, pk=pk, created_by=request.user)``
 
-![[Pasted image 20220628134106.png]]
+![image](img/Pasted%20image%2020220628134106.png)
 
 ahora solo nos dejara ver y borrar los contactos que nosotros creemos, al igual que nos pedira estar identificados y si no, nos llevara a la pagina para hacer log in
 
-![[Pasted image 20220628134329.png]]
-![[Pasted image 20220628134349.png]]
+![image](img/Pasted%20image%2020220628134329.png)
+![image](img/Pasted%20image%2020220628134349.png)
+
+Listo, solo nos falta añadir/implementar mas formas de Django para los contactos (que se vean bonitos pues), asi que vamos a /contact/ y creamos un archivo llamado forms.py 
+
+```
+from django.forms import ModelForm
+
+from .models import Contact
+
+
+class ContactForm(ModelForm):
+
+    class Meta:
+
+        model = Contact
+
+        fields = ('category', 'first_name', 'last_name', 'email', 'phone', 'adress', 'zipcode', 'city')
+```
+
+y vamos a /contact/views.py y borramos esto que ya no lo necesitamos ya que lo tomaremos de nuestras forms de Django
+
+![image](img/Pasted%20image%2020220628150935.png)
+
+y lo remplazamos por esto  para mandar a llamar esto desde nuestras formas que creamos
+
+```
+from .models import Category, Contact
+...
+
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+
+            contact = form.save(commit=False)
+
+            contact.created_by = request.user
+
+            contact.save()
+...
+```
+
+quedando asi
+
+![image](img/Pasted%20image%2020220628151345.png)
+
+guardamos y corremos el servidor para ver que no tenia un error (a mi me falto una d en address)
+
+![image](img/Pasted%20image%2020220628151746.png)
+![image](img/Pasted%20image%2020220628151752.png)
+
+Perfecto, ahora haremos lo mismo con nuestra funcion de edit, removemos todo esto
+![image](img/Pasted%20image%2020220628152002.png)
+
+y le ponemos esto en su lugar
+
+```
+@login_required
+
+def edit(request, pk):
+
+    contact = get_object_or_404(Contact, pk=pk, created_by=request.user)
+
+    categories = Category.objects.all()
+
+  
+
+    if request.method == 'POST':
+
+        form = ContactForm(request.POST, instance=contact)
+
+  
+
+        if form.is_valid():
+
+            form.save()
+
+  
+
+            return redirect('frontpage')
+
+    else:
+
+        form = ContactForm()
+```
+
+y listo, ahora las forms de Django estan implementadas en todos lados y con esto terminamos por hoy

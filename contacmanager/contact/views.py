@@ -1,33 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 
+from .forms import ContactForm
 from .models import Category, Contact
 
 @login_required
 def add(request):
     if request.method == 'POST':
-        category_id = request.POST.get('category')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        address = request.POST.get('address')
-        zipcode = request.POST.get('zipcode')
-        city = request.POST.get('city')
+        form = ContactForm(request.POST)
 
-        Contact.objects.create(
-            category_id=category_id,
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone=phone,
-            address=address,
-            zipcode=zipcode,
-            city=city,
-            created_by=request.user
-        )
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.created_by = request.user
+            contact.save()
 
-        return redirect('frontpage')
+            return redirect('frontpage')
 
     categories = Category.objects.all()
 
@@ -40,17 +27,14 @@ def edit(request, pk):
     categories = Category.objects.all()
 
     if request.method == 'POST':
-        contact.category_id = request.POST.get('category')
-        contact.first_name = request.POST.get('first_name')
-        contact.last_name = request.POST.get('last_name')
-        contact.email = request.POST.get('email')
-        contact.phone = request.POST.get('phone')
-        contact.address = request.POST.get('address')
-        contact.zipcode = request.POST.get('zipcode')
-        contact.city = request.POST.get('city')
+        form = ContactForm(request.POST, instance=contact)
 
-        contact.save()
-        return redirect('frontpage')
+        if form.is_valid():
+            form.save()
+
+            return redirect('frontpage')
+    else:
+        form = ContactForm()
 
     return render(request, 'contact/edit.html', {
         'contact': contact,

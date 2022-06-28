@@ -887,4 +887,60 @@ ahora al darle el "Log out" nos llevara a "Log in"
 
 ![[Pasted image 20220627172921.png]]
 
-bien, ahora implementaremos una nueva función para solo poder ver los contactos que nosotros hemos agregado, para esto nos vamos a /contact/models.py
+bien, ahora implementaremos una nueva función para solo poder ver los contactos que nosotros hemos agregado, para esto nos vamos a /contact/models.py y agregamos primero esto
+```from django.contrib.auth.models import User```
+y luego hasta abajo un nuevo modelo
+``created_by = models.ForeignKey(User, related_name='contacts', on_delete=models.CASCADE)`` 
+
+Porcierto esto lo que hace es que cuando se elimina el objeto al que se hace referencia, también se eliminan los objetos que tienen referencias a él (Cuando se elimina una publicación de blog, por ejemplo, es posible que desee eliminar comentarios también). 
+
+ya para terminar como pusimos un nuevo modelo pues tenemos que ir a hacer la migración, asi que vamos a la terminal y escribimos ``python manage.py makemigrations``
+y luego ``python manage.py migrate``, en el inter nos dira que ya tenemos registrado algo, solo le damos la opcion 1 y listo
+
+![[Pasted image 20220628131759.png]]
+
+si volvemos a correr el servidor nada cambiara ya que en nuestro views.py aun sigue mostrandonos todos los contactos, asi que vamos a /contactmanager/views.py y cambiemos eso poniendo lo siguiente:
+
+![[Pasted image 20220628132059.png]]
+
+Y al recargar la pagina si seguimos logueados con el usuario que creamos nos deberá salir que no hay resultados
+
+![[Pasted image 20220628132234.png]]
+
+OJO, si no estas logeado te saldrá un error
+
+![[Pasted image 20220628132303.png]]
+
+solo ve a http://127.0.0.1:8000/login/ y logeate con el usuario que creamos 😉
+
+ahora le pondremos precisamente para evitar esto que cuando quieras ver los contactos te pida automáticamente que te identifiques. En /contactmanager.views.py ponemos el siguiente decorador
+
+```
+from django.contrib.auth import login
+
+from django.contrib.auth.decorators import login_reuired
+
+...
+  
+
+@login_reuired
+
+def frontpage(request):
+
+    contacts = Contact.objects.filter(created_by=request.user)
+
+...
+```
+
+para terminar vamos a /contact/views.py y tenemos que conectar la forma que acabamos de hacer con el usuario como tal, asi que ponemos primero nuestro ``from django.contrib.auth.decorators import login_required``  y luego antes de cada función ponemos ``@login_required``  para que no deje hacer nada si no iniciamos sesión y luego en los objetos creados por el usuario ponemos ``created_by=request.user `` quedando mas o menos asi
+![[Pasted image 20220628134038.png]]
+
+y terminamos con ponerle esto a la función  de crear y borrar para que solo nos deje crear y borrar nuestros propios contactos
+``contact = get_object_or_404(Contact, pk=pk, created_by=request.user)``
+
+![[Pasted image 20220628134106.png]]
+
+ahora solo nos dejara ver y borrar los contactos que nosotros creemos, al igual que nos pedira estar identificados y si no, nos llevara a la pagina para hacer log in
+
+![[Pasted image 20220628134329.png]]
+![[Pasted image 20220628134349.png]]

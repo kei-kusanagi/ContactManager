@@ -1,12 +1,14 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
 from contact.models import Contact
 
+@login_required
 def frontpage(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.filter(created_by=request.user)
 
     query = request.GET.get('query', '')
 

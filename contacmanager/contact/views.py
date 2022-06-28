@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .models import Category, Contact
 
+@login_required
 def add(request):
     if request.method == 'POST':
         category_id = request.POST.get('category')
@@ -22,6 +24,7 @@ def add(request):
             address=address,
             zipcode=zipcode,
             city=city,
+            created_by=request.user
         )
 
         return redirect('frontpage')
@@ -31,9 +34,9 @@ def add(request):
     return render(request, 'contact/add.html', {
         'categories': categories
         })
-
+@login_required
 def edit(request, pk):
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = get_object_or_404(Contact, pk=pk, created_by=request.user)
     categories = Category.objects.all()
 
     if request.method == 'POST':
@@ -53,8 +56,8 @@ def edit(request, pk):
         'contact': contact,
         'categories': categories
     })
-
+@login_required
 def delete(request, pk):
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = get_object_or_404(Contact, pk=pk, created_by=request.user)
     contact.delete()
     return redirect('frontpage')
